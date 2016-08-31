@@ -1,0 +1,149 @@
+<div ng-controller="EventsViewController as eventsView" class="fill-parent split-view">
+   <div vx-refreshable refresh="eventsView.refresh()"></div>
+   <div vui-splitter="eventsView.splitterOptions"
+        vx-vui-splitter-resize-notifier="eventsView.eventsListOptions"
+        class="fill-parent">
+      <div class="vui-panel">
+         <vx-activity-indicator is-visible="eventsView.pendingRequest" title="{{i18n('Common', 'loadingTitle')}}"></vx-activity-indicator>
+         <div class="fill-parent">
+            <div ng-if="eventsView.eventsListOptions" vui-datagrid="eventsView.eventsListOptions"
+                 vx-datagrid-preselect-item class="fill-parent">
+            </div>
+         </div>
+      </div>
+      <div class="vui-panel details">
+         <div ng-show="!eventsView.selectedEvent" class="fill-parent centered-content-container">
+            <span class="no-items-selected">
+               {{::i18n('EventUi', 'eventSelectOne')}}
+            </span>
+         </div>
+         <div ng-if="eventsView.selectedEvent" class="content">
+            <div class="horizontal-flex-container">
+               <div class="half-size">
+
+                  <!-- Date Time -->
+                  <div class="property-value horizontal-flex-container">
+                     <span class="property">
+                        {{::i18n('EventUi', 'eventCreationTimeLabel.text')}}
+                     </span>
+                     <span>{{eventsView.selectedEvent.createdTime}}</span>
+                  </div>
+                  <!-- User -->
+                  <div ng-show="eventsView.selectedEvent.userName"
+                        class="property-value horizontal-flex-container">
+                     <span class="property">
+                        {{::i18n('EventUi', 'eventUserLabel.text')}}
+                     </span>
+                     <span>{{eventsView.selectedEvent.userName}}</span>
+                  </div>
+               </div>
+               <div class="half-size">
+
+                  <!-- Type -->
+                  <div class="property-value horizontal-flex-container">
+                     <span class="property">
+                        {{::i18n('EventUi', 'eventTypeLabel.text')}}
+                     </span>
+                     <span>{{eventsView.selectedEvent.categoryName}}</span>
+                  </div>
+
+                  <!-- Target -->
+                  <div ng-show="eventsView.selectedEvent.targetEntityName"
+                        class="property-value horizontal-flex-container">
+                     <span class="property">
+                        {{::i18n('EventUi', 'eventRelatedTargetLabel.text')}}
+                     </span>
+                     <span>
+                        <span class="{{eventsView.selectedEvent.targetIcon}}"></span>
+                        <a ng-click="$root._navigateToObject(eventsView.selectedEvent.targetEntityId)"
+                              title="{{eventsView.selectedEvent.targetEntityName}}">
+                           {{eventsView.selectedEvent.targetEntityName || '&nbsp;'}}
+                        </a>
+                     </span>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Task -->
+            <div ng-show="eventsView.selectedEvent.isTaskEvent"
+                  class="property-value horizontal-flex-container">
+               <span class="property">
+                  {{::i18n('EventUi', 'eventRelatedTaskLabel.text')}}
+               </span>
+               <span>{{eventsView.selectedEvent.taskInfoName}}</span>
+            </div>
+
+            <!-- Description -->
+            <div class="property-value horizontal-flex-container">
+               <span class="property">
+                  {{::i18n('EventUi', 'descriptionLabel.text')}}
+               </span>
+               <span ng-show="eventsView.showAskVmware" class="ask-vmware">
+                  <a ng-click="eventsView.openHelp(eventsView.selectedEvent)">
+                     {{::i18n('EventUi', 'EventDetailsView.askVMware')}}
+                  </a>
+               </span>
+            </div>
+            <div class="property-value horizontal-flex-container">
+               <span class="property date-time">
+                  <span class="icon-vSphere-events"></span>
+                  {{eventsView.selectedEvent.createdTimeText}}
+               </span>
+               <span>
+                  <linked-text
+                     text="eventsView.selectedEvent.linkableFormattedMessage"
+                     targets="eventsView.selectedEvent.linkableEntities"
+                     fallback-text="eventsView.selectedEvent.fullFormattedMessage"
+                  ></linked-text>
+               </span>
+            </div>
+
+            <!-- Type description -->
+            <div ng-if="eventsView.selectedEvent.longDescription">
+               <div class="property-value">
+                  <span class="property">
+                     {{::i18n('EventUi', 'typeDescriptionLabel.text')}}
+                  </span>
+               </div>
+               <div class="property-value">
+                  <span>{{eventsView.selectedEvent.longDescription}}</span>
+               </div>
+            </div>
+
+            <!-- Possible causes -->
+            <div ng-if="eventsView.selectedEvent.causes && eventsView.selectedEvent.causes.length > 0">
+               <div class="property-value">
+                  <span class="property">
+                     {{::i18n('EventUi', 'typeCauseLabel.text')}}
+                  </span>
+               </div>
+               <ul class="causes-list">
+                  <li ng-repeat="cause in eventsView.selectedEvent.causes">
+                     {{cause.description}}
+                     {{cause.action ? i18n('EventUi', 'actionLabel.text', cause.action) : ''}}
+                  </li>
+               </ul>
+            </div>
+
+            <!-- Related events -->
+            <div class="property-value">
+               <span class="property">
+                  {{::i18n('EventUi', 'relatedEventsTitleLabel.text')}}
+               </span>
+            </div>
+
+            <div ng-show="!eventsView.hasRelatedEvents"
+                 class="property-value">
+               <span>{{::i18n('EventUi', 'noRelatedEventsFound.text')}}</span>
+            </div>
+
+            <div ng-if="eventsView.hasRelatedEvents">
+               <div>
+                  <div vui-datagrid="eventsView.relatedEventsListOptions" class="related-events">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
