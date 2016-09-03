@@ -26,4 +26,5 @@ Angularjs中module到第二个参数，表示该模块所依赖到模块名称�
  - 在当前文件中使用、增加和修改该模块。
  - 也可以通过这个方法在不同到源文件中引用同一个模块并进行扩张。  
  
-当然，我们在加载一个模块时，需要确保所以需要到文件在引用之前一斤被正确到加载到HTML中。
+当然，我们在加载一个模块时，需要确保所以需要到文件在引用之前一斤被正确到加载到HTML中。[]()
+示例代码参考 [module-example.html](https://github.com/dinghb/angularjs-up-and-running/blob/master/chapter2/module-example.html)
