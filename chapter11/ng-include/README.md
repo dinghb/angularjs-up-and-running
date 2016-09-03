@@ -34,6 +34,8 @@ ng-include的值表示的是一个HTML文件的路径，然后ng-include就会�
 此时需要，在双引号中，使用单引号将路径`view/stock.html`包裹起来，表明这个路径是一个字面量，而不是让angularjs将其当成一个变量。
 
 ## 特点
-
+ - 将巨大的HTML文件分解成更小、更易维护的片段。
+ - ng-include包含的内容会被当成唯一的子元素，嵌套在ng-include元素内。
+ - ng-include包含的内容的作用域会受到父作用域的影响。
 
 ## 限制
