@@ -8,6 +8,7 @@
   <div ng-controller="MainCtrl as mainCtrl">
     <h3>List of Stocks</h3>
     <div ng-repeat="s in mainCtrl.stocks">
+      <!--  dhb: use stock-data attr  -->
       <div stock-widget stock-data="s">
       </div>
     </div>
