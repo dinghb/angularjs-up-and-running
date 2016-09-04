@@ -1,4 +1,6 @@
 // File: chapter13/directive-advanced-transclusion/directive.js
+//This directive takes any array from our controller and uses the content of 
+//the directive as a template to create one for each instance in our array. 
 angular.module('stockMarketApp').directive('simpleStockRepeat',
     [function() {
   return {
