@@ -26,6 +26,8 @@ angular.module('sliderApp')
         // When data changes outside of AngularJS
         $element.on('set', function(args) {
           // Also tell AngularJS that it needs to update the UI
+          // third-party UI component is outside the AngularJS life cycle, 
+          // so we need to manually call $scope.$apply() to ensure that AngularJS updates the UI.
           $scope.$apply(function() {
             // Set the data within AngularJS
             ngModelCtrl.$setViewValue($element.val());
